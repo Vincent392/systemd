@@ -182,6 +182,11 @@ static int display_emergency_message_fullscreen(const char *message) {
                 goto cleanup;
         }
 
+        r = loop_write(r, "X_X");
+        if (r < 0) {
+                ret = log_warning_errno(r, "Failed to write death face to terminal, ignoring: %m");
+
+        }
         qr_code_start_row = w.ws_row * 3U / 5U;
         qr_code_start_column = w.ws_col * 3U / 4U;
         r = set_terminal_cursor_position(fd, 4, 4);
